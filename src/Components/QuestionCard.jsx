@@ -1,5 +1,9 @@
+import { useState } from 'react';
+import Option from './Option';
+
 const QuestionCard = ({ data }) => {
-  console.log(data);
+  // console.log(data);
+  const [showAns, setShowAns] = useState(false);
   return (
     <div className='question-card'>
       {/* add question here */}
@@ -9,21 +13,23 @@ const QuestionCard = ({ data }) => {
             <h3>{elem.question}</h3>
 
             <div className='options'>
-              {elem.options.map((el, i) => {
-                return (
-                  <button
-                    className={
-                      elem.correctOptionIndex == i ? 'bgGreen' : 'bgRed'
-                    }>
-                    {el}
-                  </button>
-                );
-              })}
+              <Option
+                options={elem.options}
+                index={elem.correctOptionIndex}
+              />
+            </div>
+            <div className='show-ans'>
+              {!showAns ? (
+                <button onClick={() => setShowAns(true)}>Show Answer</button>
+              ) : (
+                <button onClick={() => setShowAns(false)}>Hide Answer</button>
+              )}
+              <br />
+              {showAns && elem.options[elem.correctOptionIndex]}
             </div>
           </div>
         );
       })}
-      <div className='show-ans'></div>
     </div>
   );
 };
